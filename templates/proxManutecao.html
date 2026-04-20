@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoMate - Manutenções</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 font-sans text-slate-900 p-4 md:p-8">
+
+<div class="max-w-5xl mx-auto">
+    <header class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-slate-800 flex items-center gap-2">
+                <i data-lucide="wrench" class="text-blue-600"></i> AutoMate
+            </h1>
+            <p class="text-slate-500">Gestão inteligente de manutenções</p>
+        </div>
+
+        <div class="flex gap-3">
+            <a href="/" class="flex items-center gap-2 bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all font-medium shadow-sm">
+                <i data-lucide="calendar-days" class="w-4 h-4"></i> Home
+            </a>
+            <a href="/buscarAtras" class="flex items-center gap-2 bg-rose-500 hover:bg-rose-700 text-white px-4 py-2 rounded-lg transition-all font-medium shadow-sm">
+                <i data-lucide="alert-circle" class="w-4 h-4"></i> Manuteções Atrasadas
+            </a>
+        </div>
+    </header>
+
+    <main class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="p-6 border-b border-slate-100">
+            <h2 class="text-xl font-semibold text-slate-700">Proximas Manuteções!</h2>
+        </div>
+
+        {% if dados %}
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                <tr class="bg-slate-50 text-slate-500 uppercase text-xs font-bold tracking-wider">
+                    <th class="px-6 py-4">Código</th>
+                    <th class="px-6 py-4">Descrição</th>
+                    <th class="px-6 py-4 text-center">Última Realizada</th>
+                    <th class="px-6 py-4 text-center text-blue-600">Próxima Revisão</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                {% for dado in dados %}
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-6 py-4 font-mono text-sm text-slate-500">{{ dado.Codigo }}</td>
+                    <td class="px-6 py-4 font-medium text-slate-800">{{ dado.Descricao }}</td>
+                    <td class="px-6 py-4 text-center text-slate-600">{{ dado.DataUltimaManutecao }}</td>
+                    <td class="px-6 py-4 text-center">
+                                <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold border border-blue-100">
+                                    {{ dado.DataProxManutecao }}
+                                </span>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="flex flex-col items-center justify-center p-12 text-slate-400">
+            <i data-lucide="clipboard-check" class="w-12 h-12 mb-4 opacity-20"></i>
+            <p class="text-lg">Tudo em dia! Nenhuma manutenção pendente.</p>
+        </div>
+        {% endif %}
+    </main>
+</div>
+
+<script>
+    lucide.createIcons();
+</script>
+</body>
+</html>
